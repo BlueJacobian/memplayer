@@ -12,8 +12,95 @@
     <meta property='og:title' content='MemPlayer' />
     <meta property='og:description' content='An Audio Memory Tool' />
     <title>MemPlayer</title>
+    <style>
+        .marker-button {display:inline-block; width:45%; height:50px; vertical-align:middle; border-radius:10px; margin-top:5px}
+        .marker-button:hover {cursor:pointer}
+        .marker-set {background-color:#ffaaaa}
+        .marker-set:hover {background-color:#ff7777}
+        .marker-play {background-color:#aaffaa}
+        .marker-play:hover {background-color:#77ff77}
+    </style>
 </head>
 <body>
     <div>MemPlayer</div>
+    <script>var timearray = [0, 0, 0, 0, 0];</script>
+    <div class="jake-audio-container" id="jake-audio-container-main">
+        <audio class="jake-audio" id="jake-audio-main" preload="metadata"></audio>
+        <table><tr>
+        <td width="18%"><img class="jake-play-icon" id="jake-play-icon-main" src="https://musicbakery.com/wp-content/uploads/2017/08/play.png"></td>
+        <td><span class="jake-current-time" id="jake-current-time-main"></span> <input type="range" class="jake-slider" id="jake-slider-main" max="100" value="0"> <span class="jake-duration" id="jake-duration-main"></span></td>
+        </tr></table></div>
+    <script>
+        for (let i=0;i<timearray.length;i++) {
+            container = document.createElement("div"); container.className = "marker-container"; container.id = "marker-"+i;
+            setbutton = document.createElement("div"); setbutton.className = "marker-button marker-set"; setbutton.id = "marker-set-"+i; setbutton.innerHTML = "Set";
+            playbutton = document.createElement("div"); playbutton.className = "marker-button marker-play"; playbutton.id = "marker-play-"+i; playbutton.innerHTML = "Play &#9658;";
+            container.appendChild(setbutton); container.appendChild(playbutton);
+            document.body.append(container); }
+        const jakeaudio = document.getElementById("jake-audio-main");
+            jakeaudio.src = "https://archive.org/download/ElfmansReadings_Hamlet/Hamlet_Tobeornottobe.mp3";
+        const jakeplay = document.getElementById("jake-play-icon-main");
+        const jakeslider = document.getElementById("jake-slider-main");
+        const jakeduration = document.getElementById("jake-duration-main");
+        const jakecurrenttime = document.getElementById("jake-current-time-main");
+        jakeplay.addEventListener("click", ()=>{if (jakeplay.src == "https://musicbakery.com/wp-content/uploads/2017/08/pause.png") {jakeaudio.pause(); jakeplay.src = "https://musicbakery.com/wp-content/uploads/2017/08/play.png";} else { jakeaudio.play(); jakeplay.src = "https://musicbakery.com/wp-content/uploads/2017/08/pause.png";} });
+        jakeslider.addEventListener("change", ()=>{jakeaudio.currentTime = jakeslider.value;});
+        jakeaudio.addEventListener("timeupdate", ()=>{jakeslider.value = Math.floor(jakeaudio.currentTime);});
+        for (let i=0; i<timearray.length; i++) {
+            document.getElementById("marker-set-"+i).addEventListener("click", ()=>{timearray[i] = Math.floor(jakeaudio.currentTime); document.getElementById("marker-set-"+i).innerHTML = timearray[i]; });
+            document.getElementById("marker-play-"+i).addEventListener("click", ()=>{jakeaudio.currentTime = timearray[i]; }); }
+    </script>
+    <p> Hold thy desperate hand:
+        Art thou a man? thy form cries out thou art:
+        Thy tears are womanish; thy wild acts denote
+        The unreasonable fury of a beast:
+        Unseemly woman in a seeming man!
+        Or ill-beseeming beast in seeming both!
+        Thou hast amazed me: by my holy order,
+        I thought thy disposition better temper'd.
+        Hast thou slain Tybalt? wilt thou slay thyself?
+        And stay thy lady too that lives in thee,
+        By doing damned hate upon thyself?
+        Why rail'st thou on thy birth, the heaven, and earth?
+        Since birth, and heaven, and earth, all three do meet
+        In thee at once; which thou at once wouldst lose.
+        Fie, fie, thou shamest thy shape, thy love, thy wit;
+        Which, like a usurer, abound'st in all,
+        And usest none in that true use indeed
+        Which should bedeck thy shape, thy love, thy wit:
+        Thy noble shape is but a form of wax,
+        Digressing from the valour of a man;
+        Thy dear love sworn but hollow perjury,
+        Killing that love which thou hast vow'd to cherish;
+        Thy wit, that ornament to shape and love,
+        Misshapen in the conduct of them both,
+        Like powder in a skitless soldier's flask,
+        Is set afire by thine own ignorance,
+        And thou dismember'd with thine own defence.
+        What, rouse thee, man! thy Juliet is alive,
+        For whose dear sake thou wast but lately dead;
+        There art thou happy: Tybalt would kill thee,
+        But thou slew'st Tybalt; there are thou happy too:
+        The law that threaten'd death becomes thy friend
+        And turns it to exile; there art thou happy:
+        A pack of blessings lights up upon thy back;
+        Happiness courts thee in her best array;
+        But, like a misbehaved and sullen wench,
+        Thou pout'st upon thy fortune and thy love:
+        Take heed, take heed, for such die miserable.
+        Go, get thee to thy love, as was decreed,
+        Ascend her chamber, hence and comfort her:
+        But look thou stay not till the watch be set,
+        For then thou canst not pass to Mantua;
+        Where thou shalt live, till we can find a time
+        To blaze your marriage, reconcile your friends,
+        Beg pardon of the prince, and call thee back
+        With twenty hundred thousand times more joy
+        Than thou went'st forth in lamentation.
+        Go before, nurse: commend me to thy lady;
+        And bid her hasten all the house to bed,
+        Which heavy sorrow makes them apt unto:
+        Romeo is coming. </p>
+    <p><a href="https://www.opensourceshakespeare.org/views/plays/characters/charlines.php?CharID=friarlaurence&WorkID=romeojuliet&cues=1" target="_blank">Open Source Shakespeare</a></p>
 </body>
 </html>
