@@ -1,10 +1,10 @@
 body {position:relative; scroll-behavior:smooth; user-select:none; margin:0px; align-items:center; justify-content:center; text-align:center; font-family:'Source Sans Pro', sans-serif; font-size:16pt; background-color:#f7f7f7;}
 
 .jake-audio-container {margin:2px; border:ridge #8080ff 2px; background-color:#f0f0f0; border-radius:10px; box-shadow: 2px 2px 2px #a0a0a0;}
-.jake-play-icon {margin-top:5px; margin-left: 5px; width:90px}
+.jake-play-icon {margin-top:5px; margin-left: 5px; width:90px;}
 .jake-play-icon:hover {cursor:pointer;}
-.jake-current-time {display:none;}
-.jake-duration {display:none;}
+.jake-current-time {float:left; margin-left:15px;}
+.jake-duration {float:right;}
 input[type=range] {width:90%; margin-bottom:11px; margin-left: 10px}
 
 /* Chrome & Safari */

@@ -13,42 +13,45 @@
     <meta property='og:description' content='An Audio Memory Tool' />
     <title>MemPlayer</title>
     <style>
-        .marker-button {display:inline-block; width:45%; height:50px; vertical-align:middle; border-radius:10px; margin-top:5px}
+        .marker-button {display:inline-block; width:45%; height:40px; vertical-align:middle; border-radius:10px; margin-top:5px; padding-top:10px;}
         .marker-button:hover {cursor:pointer}
-        .marker-set {background-color:#ffaaaa}
+        .marker-set {background-color:#ffaaaa; margin-right:4px; }
         .marker-set:hover {background-color:#ff7777}
-        .marker-play {background-color:#aaffaa}
+        .marker-play {background-color:#aaffaa; margin-left:4px; }
         .marker-play:hover {background-color:#77ff77}
     </style>
 </head>
 <body>
-    <div>MemPlayer</div>
+    <h1>MemPlayer</h1>
     <script>var timearray = [0, 0, 0, 0, 0];</script>
     <div class="jake-audio-container" id="jake-audio-container-main">
-        <audio class="jake-audio" id="jake-audio-main" preload="metadata"></audio>
+        <audio class="jake-audio" id="jake-audio-main" src="../assets/friar_laurence_monologue.m4a" preload="metadata"></audio>
         <table><tr>
-        <td width="18%"><img class="jake-play-icon" id="jake-play-icon-main" src="https://musicbakery.com/wp-content/uploads/2017/08/play.png"></td>
-        <td><span class="jake-current-time" id="jake-current-time-main"></span> <input type="range" class="jake-slider" id="jake-slider-main" max="100" value="0"> <span class="jake-duration" id="jake-duration-main"></span></td>
+        <td width="18%"><img class="jake-play-icon" id="jake-play-icon-main" src="../assets/play.png"></td>
+        <td><div><input type="range" class="jake-slider" id="jake-slider-main" max="100" value="0"></div>
+        <div><span class="jake-current-time" id="jake-current-time-main">Hi</span>  <span class="jake-duration" id="jake-duration-main">Lo</span></div></td>
         </tr></table></div>
     <script>
         for (let i=0;i<timearray.length;i++) {
             container = document.createElement("div"); container.className = "marker-container"; container.id = "marker-"+i;
-            setbutton = document.createElement("div"); setbutton.className = "marker-button marker-set"; setbutton.id = "marker-set-"+i; setbutton.innerHTML = "Set";
+            setbutton = document.createElement("div"); setbutton.className = "marker-button marker-set"; setbutton.id = "marker-set-"+i; setbutton.innerHTML = "Set &#9202;";
             playbutton = document.createElement("div"); playbutton.className = "marker-button marker-play"; playbutton.id = "marker-play-"+i; playbutton.innerHTML = "Play &#9658;";
             container.appendChild(setbutton); container.appendChild(playbutton);
             document.body.append(container); }
         const jakeaudio = document.getElementById("jake-audio-main");
-            jakeaudio.src = "https://archive.org/download/ElfmansReadings_Hamlet/Hamlet_Tobeornottobe.mp3";
         const jakeplay = document.getElementById("jake-play-icon-main");
         const jakeslider = document.getElementById("jake-slider-main");
         const jakeduration = document.getElementById("jake-duration-main");
         const jakecurrenttime = document.getElementById("jake-current-time-main");
-        jakeplay.addEventListener("click", ()=>{if (jakeplay.src == "https://musicbakery.com/wp-content/uploads/2017/08/pause.png") {jakeaudio.pause(); jakeplay.src = "https://musicbakery.com/wp-content/uploads/2017/08/play.png";} else { jakeaudio.play(); jakeplay.src = "https://musicbakery.com/wp-content/uploads/2017/08/pause.png";} });
+        jakeplay.addEventListener("click", ()=>{if (!jakeaudio.paused) {jakeaudio.pause(); jakeplay.src = "../assets/play.png";} else { jakeaudio.play(); jakeplay.src = "../assets/pause.png";} });
         jakeslider.addEventListener("change", ()=>{jakeaudio.currentTime = jakeslider.value;});
-        jakeaudio.addEventListener("timeupdate", ()=>{jakeslider.value = Math.floor(jakeaudio.currentTime);});
+        jakeaudio.addEventListener("timeupdate", ()=>{jakeslider.value = Math.floor(jakeaudio.currentTime); jakecurrenttime.innerHTML = jakeslider.value; });
+        jakeaudio.addEventListener("ended", ()=>{jakeslider.value = Math.floor(jakeaudio.currentTime); jakecurrenttime.innerHTML = jakeslider.value; jakeplay.src = "../assets/play.png"; });
+        jakeaudio.currentTime = 200;
+        setTimeout(() => { jakeduration.innerHTML = Math.floor(jakeaudio.currentTime); jakeslider.max = Math.floor(jakeaudio.currentTime); jakeaudio.currentTime = 0; }, 500);
         for (let i=0; i<timearray.length; i++) {
             document.getElementById("marker-set-"+i).addEventListener("click", ()=>{timearray[i] = Math.floor(jakeaudio.currentTime); document.getElementById("marker-set-"+i).innerHTML = timearray[i]; });
-            document.getElementById("marker-play-"+i).addEventListener("click", ()=>{jakeaudio.currentTime = timearray[i]; }); }
+            document.getElementById("marker-play-"+i).addEventListener("click", ()=>{jakeaudio.currentTime = timearray[i]; jakeaudio.play(); jakeplay.src = "../assets/pause.png"; }); }
     </script>
     <p> Hold thy desperate hand:
         Art thou a man? thy form cries out thou art:
@@ -102,5 +105,6 @@
         Which heavy sorrow makes them apt unto:
         Romeo is coming. </p>
     <p><a href="https://www.opensourceshakespeare.org/views/plays/characters/charlines.php?CharID=friarlaurence&WorkID=romeojuliet&cues=1" target="_blank">Open Source Shakespeare</a></p>
+    <p><a href="https://archive.org/download/ElfmansReadings_Hamlet/Hamlet_Tobeornottobe.mp3" target="_blank">To Be or Not To Be</a></p>
 </body>
 </html>
