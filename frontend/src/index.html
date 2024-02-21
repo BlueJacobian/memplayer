@@ -13,10 +13,12 @@
     <meta property='og:description' content='An Audio Memory Tool' />
     <title>MemPlayer</title>
     <style>
-        .marker-button {display:inline-block; width:45%; height:40px; vertical-align:middle; border-radius:10px; margin-top:5px; padding-top:10px;}
+        .marker-button {display:inline-block; width:30%; height:40px; vertical-align:middle; border-radius:10px; margin-top:5px; padding-top:10px;}
         .marker-button:hover {cursor:pointer}
-        .marker-set {background-color:#ffaaaa; margin-right:4px; }
-        .marker-set:hover {background-color:#ff7777}
+        .marker-set {background-color:#aaaaff; margin-right:4px; }
+        .marker-set:hover {background-color:#7777ff}
+        .marker-end {background-color:#ffaaaa; margin-left:4px; }
+        .marker-end:hover {background-color:#ff7777}
         .marker-play {background-color:#aaffaa; margin-left:4px; }
         .marker-play:hover {background-color:#77ff77}
     </style>
@@ -35,8 +37,9 @@
         for (let i=0;i<timearray.length;i++) {
             container = document.createElement("div"); container.className = "marker-container"; container.id = "marker-"+i;
             setbutton = document.createElement("div"); setbutton.className = "marker-button marker-set"; setbutton.id = "marker-set-"+i; setbutton.innerHTML = "Set &#9202;";
+            endbutton = document.createElement("div"); endbutton.className = "marker-button marker-end"; endbutton.id = "marker-end-"+i; endbutton.innerHTML = "End &#9632;";
             playbutton = document.createElement("div"); playbutton.className = "marker-button marker-play"; playbutton.id = "marker-play-"+i; playbutton.innerHTML = "Play &#9658;";
-            container.appendChild(setbutton); container.appendChild(playbutton);
+            container.appendChild(setbutton); container.appendChild(endbutton); container.appendChild(playbutton);
             document.body.append(container); }
         const jakeaudio = document.getElementById("jake-audio-main");
         const jakeplay = document.getElementById("jake-play-icon-main");
